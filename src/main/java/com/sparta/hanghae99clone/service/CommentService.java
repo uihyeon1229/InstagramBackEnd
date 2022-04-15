@@ -10,6 +10,9 @@ import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.repository.CommentRepository;
 import com.sparta.hanghae99clone.repository.ImageRepository;
 import com.sparta.hanghae99clone.repository.PostRepository;
+import com.sparta.hanghae99clone.utill.Calculator;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,12 +24,14 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final PostRepository postRepository;
     private final ImageRepository imageRepository;
+    private final Calculator calculator;
 
     @Autowired
-    public CommentService(CommentRepository commentRepository, PostRepository postRepository, ImageRepository imageRepository){
+    public CommentService(CommentRepository commentRepository, PostRepository postRepository, ImageRepository imageRepository, Calculator calculator){
         this.commentRepository = commentRepository;
         this.postRepository = postRepository;
         this.imageRepository = imageRepository;
+        this.calculator = calculator;
     }
 
 
@@ -47,12 +52,11 @@ public class CommentService {
                 () -> new IllegalArgumentException("null")
         );
 
-        Long postid = postId;
         String imageFile = image.getImageFile();
         String content = post.getContent();
 //        String dayBefore = post ????....
         // toDo: fix commentCnt
-        Long commentCnt = 0L;
+        Long commentCnt = Long.valueOf(commentRepository.findByPost(post).size());
         String nickname = post.getUser().getNickname();
 
         List<Comment> commentList= commentRepository.findAllByPost(post);
@@ -62,9 +66,9 @@ public class CommentService {
             CommentDto commentDto = new  CommentDto(comment.getId(),comment.getNickname(),comment.getContents());
             comments.add(commentDto);
         }
-
+        long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
         CommentListResponseDto commentListResponseDto =
-                new CommentListResponseDto(postId,imageFile,content,commentCnt,nickname,comments);
+                new CommentListResponseDto(postId,imageFile,content,calculator.time(dayBefore),commentCnt,nickname,comments);
         return commentListResponseDto;
 
 

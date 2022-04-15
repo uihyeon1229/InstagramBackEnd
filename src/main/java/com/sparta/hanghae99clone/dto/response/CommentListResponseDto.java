@@ -20,7 +20,7 @@ public class CommentListResponseDto {
 
     private String content;
 
-//    private String dayBefore;
+    private String dayBefore;
 
     private Long commentCnt;
 

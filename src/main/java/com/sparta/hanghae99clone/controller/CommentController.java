@@ -2,6 +2,7 @@ package com.sparta.hanghae99clone.Controller;
 
 
 import com.sparta.hanghae99clone.dto.request.CommentRequestDto;
+import com.sparta.hanghae99clone.dto.response.CommentListResponseDto;
 import com.sparta.hanghae99clone.model.Comment;
 import com.sparta.hanghae99clone.model.Post;
 import com.sparta.hanghae99clone.model.User;
@@ -44,9 +45,11 @@ public class CommentController {
     @Transactional
     @DeleteMapping("/api/comments/{commentId}")
     public void deletsComment(@PathVariable("commentId") Long commentId){
-
-
         commentRepository.deleteById(commentId);
+    }
 
+    @GetMapping("/api/comments/{postId}")
+    public CommentListResponseDto showAllComment(@PathVariable("postId") Long postId) {
+        return commentService.showallcomment(postId);
     }
 }

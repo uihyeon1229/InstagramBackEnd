@@ -17,11 +17,11 @@ public class PostListResponseDto {
 
     private String dayBefore;
 
-    private int commentCnt;
+    private Long commentCnt;
 
     private String nickname;
 
-    public PostListResponseDto(Post post, Image image, String dayBefore, int commentCnt) {
+    public PostListResponseDto(Post post, Image image, String dayBefore, Long commentCnt) {
         this.postId = post.getId();
         this.imageFile = image.getImageFile();
         this.content = post.getContent();

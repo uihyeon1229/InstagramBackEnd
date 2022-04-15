@@ -49,7 +49,7 @@ public class PostService {
                 () -> new IllegalArgumentException("이미지가 존재하지 않습니다.")
             );
             // 게시글에 존재하는 댓글의 수
-            int commentCnt = commentRepository.findByPost(post).size();
+            Long commentCnt = Long.valueOf(commentRepository.findByPost(post).size());
 
             // 몇 분 전에 게시글이 작성되었는지 확인
             long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
