@@ -1,5 +1,7 @@
 package com.sparta.hanghae99clone.dto.response;
 
+import com.sparta.hanghae99clone.model.Image;
+import com.sparta.hanghae99clone.model.Post;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,7 +17,16 @@ public class PostListResponseDto {
 
     private String dayBefore;
 
-    private String commentCnt;
+    private int commentCnt;
 
     private String nickname;
+
+    public PostListResponseDto(Post post, Image image, String dayBefore, int commentCnt) {
+        this.postId = post.getId();
+        this.imageFile = image.getImageFile();
+        this.content = post.getContent();
+        this.dayBefore = dayBefore;
+        this.commentCnt = commentCnt;
+        this.nickname = post.getUser().getNickname();
+    }
 }

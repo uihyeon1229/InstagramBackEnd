@@ -1,13 +1,10 @@
-package com.sparta.hanghae99clone.Controller;
+package com.sparta.hanghae99clone.controller;
 
 import com.sparta.hanghae99clone.dto.request.SignupRequestDto;
 import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;

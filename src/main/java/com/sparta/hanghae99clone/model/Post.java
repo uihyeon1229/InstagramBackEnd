@@ -1,14 +1,17 @@
 package com.sparta.hanghae99clone.model;
 
-import com.sparta.hanghae99clone.dto.request.PostRequestDto;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Entity
-public class Post {
+@Getter
+@NoArgsConstructor
+public class Post extends Timestamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,12 +22,8 @@ public class Post {
     @ManyToOne
     private User user;
 
-    public Post(PostRequestDto postRequestDto) {
-        this.content = postRequestDto.getContents();
-    }
-
-    public Post(User user, PostRequestDto postRequestDto) {
+    public Post(User user, String content) {
         this.user = user;
-        this.content = postRequestDto.getContents();
+        this.content = content;
     }
 }
