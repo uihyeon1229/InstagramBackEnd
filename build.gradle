@@ -21,6 +21,7 @@ dependencies {
 	runtimeOnly 'mysql:mysql-connector-java'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
+
 	// 스프링 시큐리티
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
@@ -30,7 +31,8 @@ dependencies {
 	implementation 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
-
+  // aws
+	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.0.1.RELEASE'
 }
 
 tasks.named('test') {
