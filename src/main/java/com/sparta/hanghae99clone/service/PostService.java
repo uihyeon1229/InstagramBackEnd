@@ -2,14 +2,13 @@ package com.sparta.hanghae99clone.service;
 
 import com.sparta.hanghae99clone.dto.request.PostRequestDto;
 import com.sparta.hanghae99clone.dto.response.PostListResponseDto;
-import com.sparta.hanghae99clone.dto.response.PostResponseDto;
-import com.sparta.hanghae99clone.model.Comment;
 import com.sparta.hanghae99clone.model.Image;
 import com.sparta.hanghae99clone.model.Post;
 import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.repository.CommentRepository;
 import com.sparta.hanghae99clone.repository.ImageRepository;
 import com.sparta.hanghae99clone.repository.PostRepository;
+import com.sparta.hanghae99clone.utill.Calculator;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
@@ -25,6 +24,7 @@ public class PostService {
     private final ImageRepository imageRepository;
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
+    private final Calculator calculator;
 
     public void save(String content,
         String uploadImageUrl,
@@ -53,33 +53,12 @@ public class PostService {
 
             // 몇 분 전에 게시글이 작성되었는지 확인
             long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
-            postResponseDtos.add(new PostListResponseDto(post, image, calculateTime(dayBefore), commentCnt));
+            postResponseDtos.add(new PostListResponseDto(post, image, calculator.time(dayBefore), commentCnt));
         }
         return postResponseDtos;
     }
 
-    private static String calculateTime(long time) {
-        // 게시글이 현재로 부터 몇 분전에 작성되었는지 보기 좋게 변경
-        if (time < 60) {
-            return String.format("%s분 전", time);
-        }
-        time = time / 60;  // 시간
-        if (time < 24) {
-            return String.format("%s시간 전", time);
-        }
-        time = time / 24;
-        if (time < 7) {
-            return String.format("%s일 전", time);
-        }
 
-        time = time / 30;
-        if (time < 12) {
-            return String.format("%s개월 전", time);
-        }
-
-        time = time / 12;
-        return String.format("%s년 전", time);
-    }
 
     // 특정 게시글 수정
     @Transactional

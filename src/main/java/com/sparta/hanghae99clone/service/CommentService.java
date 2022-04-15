@@ -51,10 +51,11 @@ public class CommentService {
         String imageFile = image.getImageFile();
         String content = post.getContent();
 //        String dayBefore = post ????....
-        Long commentCnt = post.getCommentCtn();
+        // toDo: fix commentCnt
+        Long commentCnt = 0L;
         String nickname = post.getUser().getNickname();
 
-        List<Comment> commentList=commentRepository.findAllByPost(post);
+        List<Comment> commentList= commentRepository.findAllByPost(post);
 
         List<CommentDto> comments =new ArrayList<>();
         for(Comment comment:commentList){
