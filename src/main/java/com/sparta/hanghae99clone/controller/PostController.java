@@ -10,9 +10,13 @@ import com.sparta.hanghae99clone.service.PostService;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -43,5 +47,17 @@ public class PostController {
     @GetMapping("/api/posts")
     public List<PostListResponseDto> findAll() {
         return postService.findAll();
+    }
+
+    // 특정 게시글 수정
+    @PutMapping("/api/posts/{postId}")
+    public void edit(@PathVariable Long postId, @RequestBody PostRequestDto postRequestDto) {
+        postService.edit(postId, postRequestDto);
+    }
+
+    // 특정 게시글 삭제
+    @DeleteMapping("/api/posts/{postId}")
+    public void remove(@PathVariable Long postId) {
+        postService.remove(postId);
     }
 }

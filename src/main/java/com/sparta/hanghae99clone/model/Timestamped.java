@@ -1,6 +1,7 @@
 package com.sparta.hanghae99clone.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.sparta.hanghae99clone.dto.request.PostRequestDto;
 import lombok.Getter;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
