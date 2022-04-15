@@ -1,5 +1,6 @@
 package com.sparta.hanghae99clone.model;
 
+import com.sparta.hanghae99clone.dto.request.PostRequestDto;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -17,4 +18,8 @@ public class Post {
 
     @ManyToOne
     private User user;
+
+    public Post(PostRequestDto postRequestDto) {
+        this.content = postRequestDto.getContents();
+    }
 }
