@@ -2,6 +2,10 @@ package com.sparta.hanghae99clone.controller;
 
 import com.sparta.hanghae99clone.config.S3Uploader;
 import com.sparta.hanghae99clone.dto.request.PostRequestDto;
+import com.sparta.hanghae99clone.model.Post;
+import com.sparta.hanghae99clone.model.User;
+import com.sparta.hanghae99clone.repository.PostRepository;
+import com.sparta.hanghae99clone.repository.UserRepository;
 import com.sparta.hanghae99clone.security.UserDetailsImpl;
 import com.sparta.hanghae99clone.service.PostService;
 import java.io.IOException;
@@ -20,14 +24,15 @@ public class PostController {
 
     private final S3Uploader s3Uploader;
     private final PostService postService;
+    private final UserRepository userRepository;
 
     @PostMapping("/images")
-    public String upload(@RequestBody PostRequestDto postRequestDto,
-        @RequestParam("images") MultipartFile multipartFile,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
+    public String save(@RequestBody PostRequestDto postRequestDto,
+        @RequestParam("images") MultipartFile multipartFile) throws IOException {
+        User user = userRepository.findById(1L).get();
 
         String uploadImageUrl = s3Uploader.upload(multipartFile);
-        postService.save(postRequestDto, uploadImageUrl, userDetails.getUser());
+        postService.save(postRequestDto, uploadImageUrl, user);
         return uploadImageUrl;
     }
 }
