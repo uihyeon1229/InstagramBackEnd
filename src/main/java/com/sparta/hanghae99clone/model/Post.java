@@ -22,4 +22,9 @@ public class Post {
     public Post(PostRequestDto postRequestDto) {
         this.content = postRequestDto.getContents();
     }
+
+    public Post(User user, PostRequestDto postRequestDto) {
+        this.user = user;
+        this.content = postRequestDto.getContents();
+    }
 }

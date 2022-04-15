@@ -17,4 +17,9 @@ public class Image {
 
     @ManyToOne
     private Post post;
+
+    public Image(String uploadImageUrl, Post post) {
+        this.post = post;
+        this.imageFile = uploadImageUrl;
+    }
 }
