@@ -1,8 +1,10 @@
 package com.sparta.hanghae99clone;
 
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 
+@EnableJpaAuditing
 @SpringBootApplication
 public class Hanghae99cloneApplication {
 
