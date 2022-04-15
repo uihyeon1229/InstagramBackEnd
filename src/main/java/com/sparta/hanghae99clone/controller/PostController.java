@@ -2,6 +2,7 @@ package com.sparta.hanghae99clone.controller;
 
 import com.sparta.hanghae99clone.config.S3Uploader;
 import com.sparta.hanghae99clone.dto.request.PostRequestDto;
+import com.sparta.hanghae99clone.dto.response.PostListResponseDto;
 import com.sparta.hanghae99clone.dto.response.PostResponseDto;
 import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.repository.UserRepository;
@@ -40,7 +41,7 @@ public class PostController {
 
     // 모든 게시물 조회
     @GetMapping("/api/posts")
-    public List<PostResponseDto> findAll() {
+    public List<PostListResponseDto> findAll() {
         return postService.findAll();
     }
 }
