@@ -22,6 +22,8 @@ public class Post extends Timestamped {
     @ManyToOne
     private User user;
 
+    private Long commentCtn;
+
     public Post(User user, String content) {
         this.user = user;
         this.content = content;
