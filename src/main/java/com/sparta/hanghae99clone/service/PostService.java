@@ -16,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -47,9 +48,10 @@ public class PostService {
             Image image = imageRepository.findByPost(post).orElseThrow(
                 () -> new IllegalArgumentException("이미지가 존재하지 않습니다.")
             );
-
+            // 게시글에 존재하는 댓글의 수
             int commentCnt = commentRepository.findByPost(post).size();
 
+            // 몇 분 전에 게시글이 작성되었는지 확인
             long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
             postResponseDtos.add(new PostListResponseDto(post, image, calculateTime(dayBefore), commentCnt));
         }
@@ -57,6 +59,7 @@ public class PostService {
     }
 
     private static String calculateTime(long time) {
+        // 게시글이 현재로 부터 몇 분전에 작성되었는지 보기 좋게 변경
         if (time < 60) {
             return String.format("%s분 전", time);
         }
@@ -76,5 +79,26 @@ public class PostService {
 
         time = time / 12;
         return String.format("%s년 전", time);
+    }
+
+    // 특정 게시글 수정
+    @Transactional
+    public void edit(Long postId,
+        PostRequestDto postRequestDto) {
+        Post post = postRepository.findById(postId).orElseThrow(
+            () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
+        );
+
+        post.editContent(postRequestDto);
+    }
+
+    public void remove(Long postId) {
+        System.out.println("postId = " + postId);
+        List<Post> all = postRepository.findAll();
+        for (Post post : all) {
+            System.out.println("post.getId() = " + post.getId());
+            System.out.println("post.getId().equals(postId) = " + post.getId().equals(postId));
+        }
+        postRepository.deleteById(postId);
     }
 }
