@@ -44,12 +44,13 @@ public class CommentController {
     }
     @Transactional
     @DeleteMapping("/api/comments/{commentId}")
-    public void deletsComment(@PathVariable("commentId") Long commentId){
+    public void deleteComment(@PathVariable("commentId") Long commentId){
         commentRepository.deleteById(commentId);
     }
 
     @GetMapping("/api/comments/{postId}")
-    public CommentListResponseDto showAllComment(@PathVariable("postId") Long postId) {
-        return commentService.showallcomment(postId);
+    public CommentListResponseDto showallcomment(@PathVariable Long postId){
+        CommentListResponseDto commentListResponseDto = commentService.showallcomment(postId);
+        return commentListResponseDto;
     }
 }
