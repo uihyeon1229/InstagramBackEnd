@@ -6,6 +6,7 @@ import com.sparta.hanghae99clone.model.Image;
 import com.sparta.hanghae99clone.model.Post;
 import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.repository.CommentRepository;
+import com.sparta.hanghae99clone.repository.FavoriteRepository;
 import com.sparta.hanghae99clone.repository.ImageRepository;
 import com.sparta.hanghae99clone.repository.PostRepository;
 import com.sparta.hanghae99clone.utill.Calculator;
@@ -25,7 +26,7 @@ public class PostService {
     private final PostRepository postRepository;
     private final CommentRepository commentRepository;
     private final Calculator calculator;
-    private final LikeRepository likeRepository;
+    private final FavoriteRepository favoriteRepository;
 
     public void save(String content,
         String uploadImageUrl,
@@ -56,7 +57,7 @@ public class PostService {
             long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
 
             // 게시글의 존재 유무
-            boolean likeStatus = likeRepository.existsByPostAndUser(post, user);
+            boolean likeStatus = favoriteRepository.existsByPostAndUser(post, user);
             postResponseDtos.add(new PostListResponseDto(post, image, calculator.time(dayBefore), commentCnt, likeStatus));
         }
         return postResponseDtos;

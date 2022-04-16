@@ -20,6 +20,7 @@ public class Comment extends Timestamped{
     private String contents;
 
     @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @ManyToOne

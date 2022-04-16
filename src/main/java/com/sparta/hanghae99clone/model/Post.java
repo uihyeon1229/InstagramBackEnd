@@ -25,6 +25,11 @@ public class Post extends Timestamped {
     @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
     public List<Image> images = new ArrayList<>();
 
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    public List<Comment> comments = new ArrayList<>();
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL)
+    public List<Favorite> favorites = new ArrayList<>();
 
     public Post(User user, String content) {
         this.user = user;

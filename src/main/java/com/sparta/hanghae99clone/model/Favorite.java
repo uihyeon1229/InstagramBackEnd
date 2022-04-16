@@ -18,6 +18,7 @@ public class Favorite {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "post_id")
     private Post post;
 
     @ManyToOne
