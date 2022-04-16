@@ -1,10 +1,11 @@
 package com.sparta.hanghae99clone.security;
 
 import com.sparta.hanghae99clone.model.User;
-import java.util.Collection;
-import java.util.Collections;
+//import com.sparta.springcore.model.UserRoleEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.Collection;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -19,6 +20,11 @@ public class UserDetailsImpl implements UserDetails {
     }
 
     @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
     public String getPassword() {
         return user.getPassword();
     }
@@ -27,6 +33,8 @@ public class UserDetailsImpl implements UserDetails {
     public String getUsername() {
         return user.getUsername();
     }
+
+    public String getNickname(){return user.getNickname();}
 
     @Override
     public boolean isAccountNonExpired() {
@@ -48,16 +56,15 @@ public class UserDetailsImpl implements UserDetails {
         return true;
     }
 
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-//        UserRoleEnum role = user.getRole();
-//        String authority = role.getAuthority();
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+////        UserRoleEnum role = user.getRole();
+////        String authority = role.getAuthority();
 //
 //        SimpleGrantedAuthority simpleGrantedAuthority = new SimpleGrantedAuthority(authority);
 //        Collection<GrantedAuthority> authorities = new ArrayList<>();
 //        authorities.add(simpleGrantedAuthority);
-
+//
 //        return authorities;
-        return Collections.emptyList();
-    }
+//    }
 }

@@ -1,50 +1,60 @@
 package com.sparta.hanghae99clone.service;
 
+import com.sparta.hanghae99clone.config.S3Uploader;
 import com.sparta.hanghae99clone.dto.request.SignupRequestDto;
 import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.repository.UserRepository;
+import java.io.IOException;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserService {
-    private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
+
+    private final S3Uploader s3Uploader;
 
     @Autowired
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder){
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, S3Uploader s3Uploader) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.s3Uploader = s3Uploader;
     }
 
-    @Transactional
-    public User registerUser(SignupRequestDto requestDto) {
-
+    public void registerUser(MultipartFile multipartFile, SignupRequestDto requestDto)throws IOException {
+        // 회원 ID 중복 확인
         String username = requestDto.getUsername();
+        Optional<User> found = userRepository.findByUsername(username);
+        if (found.isPresent()) {
+            throw new IllegalArgumentException("중복된 사용자 ID 가 존재합니다.");
+        }
+
+        // 패스워드 암호화
+        System.out.println(requestDto.getNickname());
+        System.out.println(requestDto.getUsername());
+        System.out.println(requestDto.getPassword());
         String password = passwordEncoder.encode(requestDto.getPassword());
         String nickname = requestDto.getNickname();
-        // 중복 로그인 확인
-        if (userRepository.existsByUsername(username)){
-            throw new IllegalArgumentException("이미 사용중인 아이디 입니다!");
-        }
-        if (userRepository.existsByNickname(nickname)){
-            throw new IllegalArgumentException("이미 사용중인 닉네임 입니다!");
-        }
-        if(!username.matches("^[a-z0-9-_]{3,10}$")){
-            throw new IllegalArgumentException("아이디는 영어와 숫자로 3~9자리로 입력하셔야 합니다!");
-        }
-        if(!requestDto.getPassword().matches("^[a-z0-9-_]{4,10}$")){
-            throw new IllegalArgumentException("비빌번호는 영어와 숫자로 4~12 자리로 입력하셔야 합니다!");
-        }
-        if(!requestDto.getNickname().matches("^[a-zA-Z0-9ㄱ-ㅎ가-힣_]{2,10}$")){
-            throw new IllegalArgumentException("닉네임은 특수문자 제외한 2글자이상 10글자 이내 완성된 글자여야합니다.");
-        }
+        String imageSrc= s3Uploader.upload(multipartFile);
 
-        User user = new User(username, password,nickname);
-        return userRepository.save(user);
+
+        // 사용자 ROLE 확인
+//        UserRoleEnum role = UserRoleEnum.USER;
+//        if (requestDto.isAdmin()) {
+//            if (!requestDto.getAdminToken().equals(ADMIN_TOKEN)) {
+//                throw new IllegalArgumentException("관리자 암호가 틀려 등록이 불가능합니다.");
+//            }
+//            role = UserRoleEnum.ADMIN;
+//        }
+
+        User user = new User(username, password, nickname, imageSrc);
+        userRepository.save(user);
     }
-
 }
