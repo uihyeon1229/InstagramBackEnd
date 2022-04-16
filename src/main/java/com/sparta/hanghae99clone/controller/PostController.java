@@ -46,7 +46,9 @@ public class PostController {
     // 모든 게시물 조회
     @GetMapping("/api/posts")
     public List<PostListResponseDto> findAll() {
-        return postService.findAll();
+        // 테스트 user
+        User user = userRepository.findById(1L).get();
+        return postService.findAll(user);
     }
 
     // 특정 게시글 수정

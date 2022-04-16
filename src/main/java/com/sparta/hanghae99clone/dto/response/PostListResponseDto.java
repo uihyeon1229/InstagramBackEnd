@@ -21,12 +21,15 @@ public class PostListResponseDto {
 
     private String nickname;
 
-    public PostListResponseDto(Post post, Image image, String dayBefore, Long commentCnt) {
+    private boolean likeStatus;
+
+    public PostListResponseDto(Post post, Image image, String dayBefore, Long commentCnt, boolean likeStatus) {
         this.postId = post.getId();
         this.imageFile = image.getImageFile();
         this.content = post.getContent();
         this.dayBefore = dayBefore;
         this.commentCnt = commentCnt;
         this.nickname = post.getUser().getNickname();
+        this.likeStatus = likeStatus;
     }
 }
