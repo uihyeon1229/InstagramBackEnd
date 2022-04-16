@@ -7,7 +7,6 @@ import com.sparta.hanghae99clone.model.Post;
 import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.repository.CommentRepository;
 import com.sparta.hanghae99clone.repository.ImageRepository;
-import com.sparta.hanghae99clone.repository.LikeRepository;
 import com.sparta.hanghae99clone.repository.PostRepository;
 import com.sparta.hanghae99clone.utill.Calculator;
 import java.time.LocalDateTime;
