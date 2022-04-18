@@ -46,7 +46,7 @@ public class PostService {
     }
 
     public List<PostListResponseDto> findAll(User user,Integer pageid) {
-        Pageable pageable= PageRequest.of(pageid,3);
+        Pageable pageable= PageRequest.of(pageid,3,Sort.by((Sort.Direction.DESC),"id"));
         Page<Post> allPost = postRepository.findAll(pageable);
         List<PostListResponseDto> postResponseDtos = new ArrayList<>();
 
