@@ -10,6 +10,7 @@ import com.sparta.hanghae99clone.service.PostService;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -45,10 +46,11 @@ public class PostController {
 
     // 모든 게시물 조회
     @GetMapping("/api/posts")
-    public List<PostListResponseDto> findAll() {
+    public List<PostListResponseDto> findAll(@RequestParam("page") Integer pageid) {
         // 테스트 user
         User user = userRepository.findById(1L).get();
-        return postService.findAll(user);
+        pageid=pageid-1;
+        return postService.findAll(user,pageid);
     }
 
     // 특정 게시글 수정

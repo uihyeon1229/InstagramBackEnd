@@ -15,6 +15,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,8 +45,9 @@ public class PostService {
         imageRepository.save(image);
     }
 
-    public List<PostListResponseDto> findAll(User user) {
-        List<Post> allPost = postRepository.findAll();
+    public List<PostListResponseDto> findAll(User user,Integer pageid) {
+        Pageable pageable= PageRequest.of(pageid,3);
+        Page<Post> allPost = postRepository.findAll(pageable);
         List<PostListResponseDto> postResponseDtos = new ArrayList<>();
 
         for (Post post : allPost) {
@@ -59,6 +64,7 @@ public class PostService {
             // 게시글의 존재 유무
             boolean likeStatus = favoriteRepository.existsByPostAndUser(post, user);
             postResponseDtos.add(new PostListResponseDto(post, image, calculator.time(dayBefore), commentCnt, likeStatus));
+
         }
         return postResponseDtos;
     }

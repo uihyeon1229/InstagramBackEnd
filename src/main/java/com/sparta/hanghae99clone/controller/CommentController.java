@@ -1,4 +1,4 @@
-package com.sparta.hanghae99clone.Controller;
+package com.sparta.hanghae99clone.controller;
 
 
 import com.sparta.hanghae99clone.dto.request.CommentRequestDto;
@@ -48,9 +48,10 @@ public class CommentController {
         commentRepository.deleteById(commentId);
     }
 
-    @GetMapping("/api/comments/{postId}")
-    public CommentListResponseDto showallcomment(@PathVariable Long postId){
-        CommentListResponseDto commentListResponseDto = commentService.showallcomment(postId);
+    @GetMapping("/api/comments/{postId}/{page}")
+    public CommentListResponseDto showallcomment(@PathVariable Long postId,@PathVariable("page") Integer pageId){
+        pageId=pageId-1;
+        CommentListResponseDto commentListResponseDto = commentService.showallcomment(postId,pageId);
         return commentListResponseDto;
     }
 }

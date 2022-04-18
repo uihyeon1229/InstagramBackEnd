@@ -1,4 +1,4 @@
-package com.sparta.hanghae99clone.Controller;
+package com.sparta.hanghae99clone.controller;
 
 import com.sparta.hanghae99clone.dto.FavoriteDto;
 import com.sparta.hanghae99clone.model.User;
