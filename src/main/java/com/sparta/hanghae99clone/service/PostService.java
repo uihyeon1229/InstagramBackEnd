@@ -32,7 +32,7 @@ public class PostService {
     private final Calculator calculator;
     private final FavoriteRepository favoriteRepository;
 
-    public void save(String content,
+    public PostListResponseDto save(String content,
         String uploadImageUrl,
         User user) {
 
@@ -43,6 +43,10 @@ public class PostService {
         // 이미지 저장
         Image image = new Image(uploadImageUrl, post);
         imageRepository.save(image);
+        //Dto 담기
+        long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
+        PostListResponseDto postListResponseDto=new PostListResponseDto(post,image,calculator.time(dayBefore),0L,false);
+        return postListResponseDto;
     }
 
     public List<PostListResponseDto> findAll(User user,Integer pageid) {

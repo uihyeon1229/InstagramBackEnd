@@ -26,7 +26,7 @@ public class PostController {
 
     // 단일 게시물 저장
     @PostMapping("/api/posts")
-    public String save(
+    public PostListResponseDto save(
         @RequestParam("images") MultipartFile multipartFile,
         @RequestParam("contents") String content,
         @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
@@ -35,8 +35,7 @@ public class PostController {
         // 이미지 업로드
         String uploadImageUrl = s3Uploader.upload(multipartFile);
         // 게시물 저장
-        postService.save(content, uploadImageUrl, user);
-        return uploadImageUrl;
+        return postService.save(content, uploadImageUrl, user);
     }
 
     // 모든 게시물 조회
