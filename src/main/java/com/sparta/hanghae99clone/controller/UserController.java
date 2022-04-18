@@ -2,21 +2,16 @@ package com.sparta.hanghae99clone.controller;
 
 import com.sparta.hanghae99clone.dto.request.SignupRequestDto;
 import com.sparta.hanghae99clone.dto.response.IsLoginResponseDto;
-import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.security.UserDetailsImpl;
 import com.sparta.hanghae99clone.service.UserService;
 import java.io.IOException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @RestController
+//@CrossOrigin
 public class UserController {
 
     private final UserService userService;

@@ -3,23 +3,20 @@ package com.sparta.hanghae99clone.controller;
 
 import com.sparta.hanghae99clone.dto.request.CommentRequestDto;
 import com.sparta.hanghae99clone.dto.response.CommentListResponseDto;
-import com.sparta.hanghae99clone.model.Comment;
 import com.sparta.hanghae99clone.model.Post;
 import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.repository.CommentRepository;
 import com.sparta.hanghae99clone.repository.PostRepository;
 import com.sparta.hanghae99clone.repository.UserRepository;
-import com.sparta.hanghae99clone.security.UserDetailsImpl;
 import com.sparta.hanghae99clone.service.CommentService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+//@CrossOrigin
 public class CommentController {
     private final CommentRepository commentRepository;
     private final CommentService commentService;
