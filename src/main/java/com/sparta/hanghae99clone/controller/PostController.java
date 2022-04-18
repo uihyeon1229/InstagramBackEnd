@@ -11,11 +11,8 @@ import com.sparta.hanghae99clone.service.PostService;
 import java.io.IOException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
-<<<<<<< HEAD
 import org.springframework.data.domain.Page;
-=======
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
->>>>>>> 0c651ac7f2773a0b8413dc92647e3fbc23633089
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,18 +47,12 @@ public class PostController {
 
     // 모든 게시물 조회
     @GetMapping("/api/posts")
-<<<<<<< HEAD
-    public List<PostListResponseDto> findAll(@RequestParam("page") Integer pageid) {
+    public List<PostListResponseDto> findAll(@RequestParam("page") Integer pageid,@AuthenticationPrincipal UserDetailsImpl userDetails) {
         // 테스트 user
-        User user = userRepository.findById(1L).get();
+
+        User user = userDetails.getUser();
         pageid=pageid-1;
         return postService.findAll(user,pageid);
-=======
-    public List<PostListResponseDto> findAll(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-        // 테스트 user
-        User user = userDetails.getUser();
-        return postService.findAll(user);
->>>>>>> 0c651ac7f2773a0b8413dc92647e3fbc23633089
     }
 
     // 특정 게시글 수정
