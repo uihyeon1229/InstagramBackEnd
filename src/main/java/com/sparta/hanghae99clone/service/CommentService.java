@@ -12,6 +12,9 @@ import com.sparta.hanghae99clone.repository.ImageRepository;
 import com.sparta.hanghae99clone.repository.PostRepository;
 import com.sparta.hanghae99clone.utill.Calculator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -42,7 +45,7 @@ public class CommentService {
         commentRepository.save(comment);
     }
 
-    public CommentListResponseDto showallcomment(Long postId) {
+    public CommentListResponseDto showallcomment(Long postId,Integer pageId) {
 
         Post post = postRepository.findById(postId).orElseThrow(
                 () -> new IllegalArgumentException("null")
@@ -58,8 +61,8 @@ public class CommentService {
         // toDo: fix commentCnt
         Long commentCnt = Long.valueOf(commentRepository.findByPost(post).size());
         String nickname = post.getUser().getNickname();
-
-        List<Comment> commentList= commentRepository.findAllByPost(post);
+        Pageable pageable= PageRequest.of(pageId,10);
+        Page<Comment> commentList= commentRepository.findAllByPost(post,pageable);
 
         List<CommentDto> comments =new ArrayList<>();
         for(Comment comment:commentList){
