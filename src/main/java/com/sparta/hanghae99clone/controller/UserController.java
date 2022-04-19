@@ -1,6 +1,8 @@
 package com.sparta.hanghae99clone.controller;
 
+import com.sparta.hanghae99clone.dto.request.IdCheckRequestDto;
 import com.sparta.hanghae99clone.dto.request.SignupRequestDto;
+import com.sparta.hanghae99clone.dto.response.IdCheckResponseDto;
 import com.sparta.hanghae99clone.dto.response.IsLoginResponseDto;
 import com.sparta.hanghae99clone.repository.UserRepository;
 import com.sparta.hanghae99clone.security.UserDetailsImpl;
@@ -51,4 +53,11 @@ public class UserController {
         return result;
 
     }
+    //아이디 중복검사
+    @PostMapping("/user/idcheck")
+    public IdCheckResponseDto vaildId(@RequestBody IdCheckRequestDto requestDto) {
+
+        return userService.vaildId(requestDto);
+    }
+
 }

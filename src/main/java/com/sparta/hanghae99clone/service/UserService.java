@@ -1,7 +1,9 @@
 package com.sparta.hanghae99clone.service;
 
 import com.sparta.hanghae99clone.config.S3Uploader;
+import com.sparta.hanghae99clone.dto.request.IdCheckRequestDto;
 import com.sparta.hanghae99clone.dto.request.SignupRequestDto;
+import com.sparta.hanghae99clone.dto.response.IdCheckResponseDto;
 import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,4 +58,15 @@ public class UserService {
         User user = new User(username, password, nickname, imageSrc);
         userRepository.save(user);
     }
+
+    public IdCheckResponseDto vaildId(IdCheckRequestDto requestDto) {
+
+            String username = requestDto.getUsername();
+            IdCheckResponseDto idCheckResponseDto = new IdCheckResponseDto();
+            idCheckResponseDto.setResult(!userRepository.existsByUsername(username));
+
+
+            return idCheckResponseDto;
+        }
+
 }
