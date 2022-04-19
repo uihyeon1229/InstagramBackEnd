@@ -46,7 +46,7 @@ public class PostService {
         imageRepository.save(image);
         //Dto 담기
         long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
-        PostListResponseDto postListResponseDto=new PostListResponseDto(post,image,calculator.time(dayBefore),0L,false);
+        PostListResponseDto postListResponseDto=new PostListResponseDto(post,image,calculator.time(dayBefore),0L, 0L, false);
         return postListResponseDto;
     }
 
@@ -63,12 +63,14 @@ public class PostService {
             // 게시글에 존재하는 댓글의 수
             Long commentCnt = Long.valueOf(commentRepository.findByPost(post).size());
 
+            Long favoriteCnt = Long.valueOf(favoriteRepository.findByPost(post).size());
+
             // 몇 분 전에 게시글이 작성되었는지 확인
             long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
 
             // 게시글의 존재 유무
-            boolean likeStatus = favoriteRepository.existsByPostAndUser(post, user);
-            postResponseDtos.add(new PostListResponseDto(post, image, calculator.time(dayBefore), commentCnt, likeStatus));
+            boolean favoriteStatus = favoriteRepository.existsByPostAndUser(post, user);
+            postResponseDtos.add(new PostListResponseDto(post, image, calculator.time(dayBefore), commentCnt, favoriteCnt, favoriteStatus));
 
         }
         return postResponseDtos;

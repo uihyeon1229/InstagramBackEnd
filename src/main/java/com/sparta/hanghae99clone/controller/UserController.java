@@ -2,6 +2,7 @@ package com.sparta.hanghae99clone.controller;
 
 import com.sparta.hanghae99clone.dto.request.SignupRequestDto;
 import com.sparta.hanghae99clone.dto.response.IsLoginResponseDto;
+import com.sparta.hanghae99clone.repository.UserRepository;
 import com.sparta.hanghae99clone.security.UserDetailsImpl;
 import com.sparta.hanghae99clone.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,17 +12,18 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-@RestController
 
+@RestController
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
-
+        this.userRepository = userRepository;
     }
 
 
@@ -42,8 +44,10 @@ public class UserController {
     public IsLoginResponseDto isloginUser(@AuthenticationPrincipal UserDetailsImpl user){
 
         IsLoginResponseDto result=new IsLoginResponseDto();
-        result.setUsername(user.getUser().getUsername());
+        result.setUsername(user.getUsername());
         result.setNickname(user.getNickname());
+        result.setImage_src(userRepository.findByUsername(user.getUsername()).get().getImageSrc());
+        System.out.println(result);
         return result;
 
     }

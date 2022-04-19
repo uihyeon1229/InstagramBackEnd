@@ -12,4 +12,6 @@ public class IsLoginResponseDto {
     private String username;
 
     private String nickname;
+
+    private String image_src;
 }

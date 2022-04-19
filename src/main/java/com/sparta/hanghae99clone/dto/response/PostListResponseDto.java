@@ -19,17 +19,20 @@ public class PostListResponseDto {
 
     private Long commentCnt;
 
+    private Long favoriteCnt;
+
     private String nickname;
 
-    private boolean likeStatus;
+    private boolean favoriteStatus;
 
-    public PostListResponseDto(Post post, Image image, String dayBefore, Long commentCnt, boolean likeStatus) {
+    public PostListResponseDto(Post post, Image image, String dayBefore, Long commentCnt, Long favoriteCnt, boolean favoriteStatus) {
         this.postId = post.getId();
         this.imageFile = image.getImageFile();
         this.content = post.getContent();
         this.dayBefore = dayBefore;
         this.commentCnt = commentCnt;
         this.nickname = post.getUser().getNickname();
-        this.likeStatus = likeStatus;
+        this.favoriteCnt = favoriteCnt;
+        this.favoriteStatus = favoriteStatus;
     }
 }
