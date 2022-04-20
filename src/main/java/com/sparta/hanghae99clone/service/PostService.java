@@ -46,13 +46,14 @@ public class PostService {
         imageRepository.save(image);
         //Dto 담기
         long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
-        PostListResponseDto postListResponseDto=new PostListResponseDto(post,image,calculator.time(dayBefore),0L, 0L, false);
+        PostListResponseDto postListResponseDto=new PostListResponseDto(post,image,calculator.time(dayBefore),0L, 0L, false, post.getUser().getImageSrc());
         return postListResponseDto;
     }
 
     public List<PostListResponseDto> findAll(User user,Integer pageid) {
         Pageable pageable= PageRequest.of(pageid,5, Sort.by((Sort.Direction.DESC),"id"));
         Page<Post> allPost = postRepository.findAll(pageable);
+
         List<PostListResponseDto> postResponseDtos = new ArrayList<>();
 
         for (Post post : allPost) {
@@ -69,8 +70,8 @@ public class PostService {
             long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
 
             // 게시글의 존재 유무
-            boolean favoriteStatus = favoriteRepository.existsByPostAndUser(post, user);
-            postResponseDtos.add(new PostListResponseDto(post, image, calculator.time(dayBefore), commentCnt, favoriteCnt, favoriteStatus));
+            boolean favoriteStatus = favoriteRepository.existsByPostAndUserId(post, user.getId());
+            postResponseDtos.add(new PostListResponseDto(post, image, calculator.time(dayBefore), commentCnt, favoriteCnt, favoriteStatus, post.getUser().getImageSrc()));
 
         }
         return postResponseDtos;

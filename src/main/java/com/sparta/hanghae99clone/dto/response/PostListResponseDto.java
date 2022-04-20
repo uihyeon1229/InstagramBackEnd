@@ -25,7 +25,9 @@ public class PostListResponseDto {
 
     private boolean favoriteStatus;
 
-    public PostListResponseDto(Post post, Image image, String dayBefore, Long commentCnt, Long favoriteCnt, boolean favoriteStatus) {
+    private String imageSrc;
+
+    public PostListResponseDto(Post post, Image image, String dayBefore, Long commentCnt, Long favoriteCnt, boolean favoriteStatus, String imageSrc) {
         this.postId = post.getId();
         this.imageFile = image.getImageFile();
         this.content = post.getContent();
@@ -34,5 +36,7 @@ public class PostListResponseDto {
         this.nickname = post.getUser().getNickname();
         this.favoriteCnt = favoriteCnt;
         this.favoriteStatus = favoriteStatus;
+        this.imageSrc = imageSrc;
     }
+
 }
