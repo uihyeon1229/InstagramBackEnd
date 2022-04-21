@@ -10,10 +10,6 @@ import com.sparta.hanghae99clone.repository.FavoriteRepository;
 import com.sparta.hanghae99clone.repository.ImageRepository;
 import com.sparta.hanghae99clone.repository.PostRepository;
 import com.sparta.hanghae99clone.utill.Calculator;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -21,6 +17,11 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -32,9 +33,9 @@ public class PostService {
     private final Calculator calculator;
     private final FavoriteRepository favoriteRepository;
 
-    public void save(String content,
-        String uploadImageUrl,
-        User user) {
+    public PostListResponseDto save(String content,
+                                    String uploadImageUrl,
+                                    User user) {
 
         // 게시글 저장
         Post post = new Post(user, content);
@@ -43,27 +44,34 @@ public class PostService {
         // 이미지 저장
         Image image = new Image(uploadImageUrl, post);
         imageRepository.save(image);
+        //Dto 담기
+        long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
+        PostListResponseDto postListResponseDto=new PostListResponseDto(post,image,calculator.time(dayBefore),0L, 0L, false, post.getUser().getImageSrc());
+        return postListResponseDto;
     }
 
     public List<PostListResponseDto> findAll(User user,Integer pageid) {
-        Pageable pageable= PageRequest.of(pageid,3);
+        Pageable pageable= PageRequest.of(pageid,5, Sort.by((Sort.Direction.DESC),"id"));
         Page<Post> allPost = postRepository.findAll(pageable);
+
         List<PostListResponseDto> postResponseDtos = new ArrayList<>();
 
         for (Post post : allPost) {
             // 게시글에 해당하는 이미지 불러오기
             Image image = imageRepository.findByPost(post).orElseThrow(
-                () -> new IllegalArgumentException("이미지가 존재하지 않습니다.")
+                    () -> new IllegalArgumentException("이미지가 존재하지 않습니다.")
             );
             // 게시글에 존재하는 댓글의 수
             Long commentCnt = Long.valueOf(commentRepository.findByPost(post).size());
+
+            Long favoriteCnt = Long.valueOf(favoriteRepository.findByPost(post).size());
 
             // 몇 분 전에 게시글이 작성되었는지 확인
             long dayBefore = ChronoUnit.MINUTES.between(post.getCreatedAt(), LocalDateTime.now());
 
             // 게시글의 존재 유무
-            boolean likeStatus = favoriteRepository.existsByPostAndUser(post, user);
-            postResponseDtos.add(new PostListResponseDto(post, image, calculator.time(dayBefore), commentCnt, likeStatus));
+            boolean favoriteStatus = favoriteRepository.existsByPostAndUserId(post, user.getId());
+            postResponseDtos.add(new PostListResponseDto(post, image, calculator.time(dayBefore), commentCnt, favoriteCnt, favoriteStatus, post.getUser().getImageSrc()));
 
         }
         return postResponseDtos;
@@ -74,9 +82,9 @@ public class PostService {
     // 특정 게시글 수정
     @Transactional
     public void edit(Long postId,
-        PostRequestDto postRequestDto) {
+                     PostRequestDto postRequestDto) {
         Post post = postRepository.findById(postId).orElseThrow(
-            () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
+                () -> new IllegalArgumentException("게시글이 존재하지 않습니다.")
         );
 
         post.editContent(postRequestDto);

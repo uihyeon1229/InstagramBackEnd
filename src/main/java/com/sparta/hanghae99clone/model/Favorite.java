@@ -1,6 +1,5 @@
 package com.sparta.hanghae99clone.model;
 
-import com.sparta.hanghae99clone.dto.FavoriteDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

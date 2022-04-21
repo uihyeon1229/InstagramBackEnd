@@ -10,17 +10,16 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-//@CrossOrigin
 public class FavoriteController {
     private final FavoriteService favoriteService;
     private final UserRepository userRepository;
 
-    @PostMapping("/api/favorite/{postId}")
-    public String favoriteCheck(@PathVariable("postId") Long postId,
-        @AuthenticationPrincipal UserDetailsImpl userDetails){
+    @PutMapping("/api/favorite/{postId}")
+    public String favoriteCheck(@PathVariable("postId") Long postId, @AuthenticationPrincipal UserDetailsImpl userDetails){
         User user = userDetails.getUser();
         favoriteService.favoriteCheck(postId,user);
         return " 좋아요";

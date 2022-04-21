@@ -1,11 +1,11 @@
 package com.sparta.hanghae99clone.model;
 
-import javax.persistence.*;
-
 import com.sparta.hanghae99clone.dto.request.CommentRequestDto;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Getter

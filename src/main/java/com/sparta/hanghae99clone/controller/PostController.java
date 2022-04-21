@@ -6,12 +6,14 @@ import com.sparta.hanghae99clone.dto.response.PostListResponseDto;
 import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.security.UserDetailsImpl;
 import com.sparta.hanghae99clone.service.PostService;
-import java.io.IOException;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
+import java.util.List;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -23,17 +25,16 @@ public class PostController {
 
     // 단일 게시물 저장
     @PostMapping("/api/posts")
-    public String save(
-        @RequestParam("images") MultipartFile multipartFile,
-        @RequestParam("contents") String content,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
+    public PostListResponseDto save(
+            @RequestParam("image") MultipartFile multipartFile,
+            @RequestParam("contents") String content,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
         // 테스트 user
         User user = userDetails.getUser();
         // 이미지 업로드
         String uploadImageUrl = s3Uploader.upload(multipartFile);
         // 게시물 저장
-        postService.save(content, uploadImageUrl, user);
-        return uploadImageUrl;
+        return postService.save(content, uploadImageUrl, user);
     }
 
     // 모든 게시물 조회

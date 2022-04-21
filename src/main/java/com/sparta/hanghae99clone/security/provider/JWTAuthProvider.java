@@ -1,10 +1,10 @@
 package com.sparta.hanghae99clone.security.provider;
 
+import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.repository.UserRepository;
+import com.sparta.hanghae99clone.security.UserDetailsImpl;
 import com.sparta.hanghae99clone.security.jwt.JwtDecoder;
 import com.sparta.hanghae99clone.security.jwt.JwtPreProcessingToken;
-import com.sparta.hanghae99clone.model.User;
-import com.sparta.hanghae99clone.security.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

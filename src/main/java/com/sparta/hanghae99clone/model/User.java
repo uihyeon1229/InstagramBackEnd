@@ -1,15 +1,11 @@
 package com.sparta.hanghae99clone.model;
 
 
-import javax.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Setter
 @Getter // get 함수를 일괄적으로 만들어줍니다.

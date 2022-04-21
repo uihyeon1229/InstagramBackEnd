@@ -1,6 +1,5 @@
 package com.sparta.hanghae99clone.service;
 
-import com.sparta.hanghae99clone.dto.FavoriteDto;
 import com.sparta.hanghae99clone.model.Favorite;
 import com.sparta.hanghae99clone.model.Post;
 import com.sparta.hanghae99clone.model.User;
@@ -9,7 +8,6 @@ import com.sparta.hanghae99clone.repository.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.Optional;
 
 @RequiredArgsConstructor

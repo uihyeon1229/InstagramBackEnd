@@ -1,8 +1,9 @@
 package com.sparta.hanghae99clone.repository;
 
 import com.sparta.hanghae99clone.model.User;
-import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
+
+import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
 

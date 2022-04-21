@@ -1,7 +1,7 @@
 package com.sparta.hanghae99clone.security;
 
-import com.sparta.hanghae99clone.repository.UserRepository;
 import com.sparta.hanghae99clone.model.User;
+import com.sparta.hanghae99clone.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

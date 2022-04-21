@@ -1,12 +1,12 @@
 package com.sparta.hanghae99clone.model;
 
 import com.sparta.hanghae99clone.dto.request.PostRequestDto;
-import java.util.ArrayList;
-import java.util.List;
-import javax.persistence.*;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter

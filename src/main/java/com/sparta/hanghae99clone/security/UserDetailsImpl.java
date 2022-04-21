@@ -1,7 +1,6 @@
 package com.sparta.hanghae99clone.security;
 
 import com.sparta.hanghae99clone.model.User;
-//import com.sparta.springcore.model.UserRoleEnum;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 

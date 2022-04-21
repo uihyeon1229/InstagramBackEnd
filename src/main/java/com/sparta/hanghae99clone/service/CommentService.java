@@ -11,14 +11,14 @@ import com.sparta.hanghae99clone.repository.CommentRepository;
 import com.sparta.hanghae99clone.repository.ImageRepository;
 import com.sparta.hanghae99clone.repository.PostRepository;
 import com.sparta.hanghae99clone.utill.Calculator;
-import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,10 +39,14 @@ public class CommentService {
 
 
 
-    public void createComment(CommentRequestDto requestDto, Post post, User user) {
+    public CommentDto createComment(CommentRequestDto requestDto, Post post, User user) {
 
         Comment comment = new Comment(requestDto,post,user);
         commentRepository.save(comment);
+
+        CommentDto commentDto = new CommentDto(comment.getId(),comment.getNickname(),comment.getContents());
+
+        return commentDto;
     }
 
     public CommentListResponseDto showallcomment(Long postId,Integer pageId) {

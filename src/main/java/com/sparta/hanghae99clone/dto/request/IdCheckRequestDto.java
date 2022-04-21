@@ -10,4 +10,5 @@ import lombok.Setter;
 public class IdCheckRequestDto {
 
     private String username;
+
 }

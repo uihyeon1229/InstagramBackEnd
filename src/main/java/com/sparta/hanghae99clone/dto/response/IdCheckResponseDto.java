@@ -7,11 +7,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class IsLoginResponseDto {
+public class IdCheckResponseDto {
 
-    private String username;
+    boolean result;
 
-    private String nickname;
-
-    private String image_src;
 }

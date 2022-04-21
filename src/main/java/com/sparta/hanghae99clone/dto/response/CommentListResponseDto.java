@@ -1,12 +1,12 @@
 package com.sparta.hanghae99clone.dto.response;
 
 import com.sparta.hanghae99clone.dto.CommentDto;
-import java.util.List;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import java.util.List;
 
 @Getter
 @Setter
