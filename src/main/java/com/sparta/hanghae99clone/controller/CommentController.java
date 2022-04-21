@@ -1,6 +1,7 @@
 package com.sparta.hanghae99clone.controller;
 
 
+import com.sparta.hanghae99clone.dto.CommentDto;
 import com.sparta.hanghae99clone.dto.request.CommentRequestDto;
 import com.sparta.hanghae99clone.dto.response.CommentListResponseDto;
 import com.sparta.hanghae99clone.model.Post;
@@ -8,8 +9,10 @@ import com.sparta.hanghae99clone.model.User;
 import com.sparta.hanghae99clone.repository.CommentRepository;
 import com.sparta.hanghae99clone.repository.PostRepository;
 import com.sparta.hanghae99clone.repository.UserRepository;
+import com.sparta.hanghae99clone.security.UserDetailsImpl;
 import com.sparta.hanghae99clone.service.CommentService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -26,7 +29,7 @@ public class CommentController {
 
 
     @PostMapping("/api/comments")
-    public void createComment(@RequestBody CommentRequestDto requestDto){
+    public CommentDto createComment(@RequestBody CommentRequestDto requestDto, @AuthenticationPrincipal UserDetailsImpl userDetails){
 //        if(userDetails.getUser()==null){
 //            throw new IllegalArgumentException("로그인을 먼저 진행해주세요");
 //        }
@@ -35,10 +38,11 @@ public class CommentController {
 //        }
 
         Post post = postRepository.findById(requestDto.getPostId()).get();
-        User user = userRepository.findById(1L).get();
-        commentService.createComment(requestDto,post,user);
+        User user = userDetails.getUser();
 
+        return commentService.createComment(requestDto,post,user);
     }
+
     @Transactional
     @DeleteMapping("/api/comments/{commentId}")
     public void deleteComment(@PathVariable("commentId") Long commentId){

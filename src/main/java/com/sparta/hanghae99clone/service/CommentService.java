@@ -39,10 +39,14 @@ public class CommentService {
 
 
 
-    public void createComment(CommentRequestDto requestDto, Post post, User user) {
+    public CommentDto createComment(CommentRequestDto requestDto, Post post, User user) {
 
         Comment comment = new Comment(requestDto,post,user);
         commentRepository.save(comment);
+
+        CommentDto commentDto = new CommentDto(comment.getId(),comment.getNickname(),comment.getContents());
+
+        return commentDto;
     }
 
     public CommentListResponseDto showallcomment(Long postId,Integer pageId) {
