@@ -4,7 +4,6 @@ import com.sparta.hanghae99clone.config.S3Uploader;
 import com.sparta.hanghae99clone.dto.request.PostRequestDto;
 import com.sparta.hanghae99clone.dto.response.PostListResponseDto;
 import com.sparta.hanghae99clone.model.User;
-import com.sparta.hanghae99clone.repository.UserRepository;
 import com.sparta.hanghae99clone.security.UserDetailsImpl;
 import com.sparta.hanghae99clone.service.PostService;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +17,7 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @RestController
+//@CrossOrigin
 public class PostController {
 
     private final S3Uploader s3Uploader;
